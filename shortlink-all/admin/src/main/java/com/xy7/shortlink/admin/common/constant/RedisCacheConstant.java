@@ -15,41 +15,25 @@
  * limitations under the License.
  */
 
-package com.xy7.shortlink.admin.dto.resp;
-
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.xy7.shortlink.admin.common.serialize.PhoneDesensitizationSerializer;
-import lombok.Data;
+package com.xy7.shortlink.admin.common.constant;
 
 /**
- * 用户返回参数响应
+ * 短链接后管 Redis 缓存常量类
  */
-@Data
-public class UserRespDTO {
+public class RedisCacheConstant {
 
     /**
-     * id
+     * 用户注册分布式锁
      */
-    private Long id;
+    public static final String LOCK_USER_REGISTER_KEY = "short-link:lock_user-register:";
 
     /**
-     * 用户名
+     * 分组创建分布式锁
      */
-    private String username;
+    public static final String LOCK_GROUP_CREATE_KEY = "short-link:lock_group-create:%s";
 
     /**
-     * 真实姓名
+     * 用户登录缓存标识
      */
-    private String realName;
-
-    /**
-     * 手机号
-     */
-    @JsonSerialize(using = PhoneDesensitizationSerializer.class)
-    private String phone;
-
-    /**
-     * 邮箱
-     */
-    private String mail;
+    public static final String USER_LOGIN_KEY = "short-link:login:";
 }

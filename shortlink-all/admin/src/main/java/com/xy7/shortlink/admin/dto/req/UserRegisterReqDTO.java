@@ -15,27 +15,25 @@
  * limitations under the License.
  */
 
-package com.xy7.shortlink.admin.dto.resp;
+package com.xy7.shortlink.admin.dto.req;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.xy7.shortlink.admin.common.serialize.PhoneDesensitizationSerializer;
 import lombok.Data;
 
 /**
- * 用户返回参数响应
+ * 用户注册请求参数
  */
 @Data
-public class UserRespDTO {
-
-    /**
-     * id
-     */
-    private Long id;
+public class UserRegisterReqDTO {
 
     /**
      * 用户名
      */
     private String username;
+
+    /**
+     * 密码
+     */
+    private String password;
 
     /**
      * 真实姓名
@@ -45,7 +43,6 @@ public class UserRespDTO {
     /**
      * 手机号
      */
-    @JsonSerialize(using = PhoneDesensitizationSerializer.class)
     private String phone;
 
     /**

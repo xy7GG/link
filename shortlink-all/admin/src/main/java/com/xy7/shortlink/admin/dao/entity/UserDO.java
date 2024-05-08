@@ -1,13 +1,12 @@
 package com.xy7.shortlink.admin.dao.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.xy7.shortlink.admin.common.database.BaseDO;
 import lombok.Data;
-
-import java.util.Date;
 
 @Data
 @TableName("t_user")
-public class UserDO {
+public class UserDO extends BaseDO {
 
     /**
      * id
@@ -43,21 +42,4 @@ public class UserDO {
      * 注销时间戳
      */
     private Long deletionTime;
-
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-
-    /**
-     * 修改时间
-     */
-    private Date updateTime;
-
-    /**
-     * 删除标识 0：未删除 1：已删除
-     */
-    private int delFlag;
-
-    public UserDO() {}
 }

@@ -15,41 +15,35 @@
  * limitations under the License.
  */
 
-package com.xy7.shortlink.admin.dto.resp;
+package com.xy7.shortlink.admin.common.database;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.xy7.shortlink.admin.common.serialize.PhoneDesensitizationSerializer;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 
+import java.util.Date;
+
 /**
- * 用户返回参数响应
+ * 数据库持久层对象基础属性
  */
 @Data
-public class UserRespDTO {
+public class BaseDO {
 
     /**
-     * id
+     * 创建时间
      */
-    private Long id;
+    @TableField(fill = FieldFill.INSERT)
+    private Date createTime;
 
     /**
-     * 用户名
+     * 修改时间
      */
-    private String username;
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private Date updateTime;
 
     /**
-     * 真实姓名
+     * 删除标识 0：未删除 1：已删除
      */
-    private String realName;
-
-    /**
-     * 手机号
-     */
-    @JsonSerialize(using = PhoneDesensitizationSerializer.class)
-    private String phone;
-
-    /**
-     * 邮箱
-     */
-    private String mail;
+    @TableField(fill = FieldFill.INSERT)
+    private Integer delFlag;
 }
