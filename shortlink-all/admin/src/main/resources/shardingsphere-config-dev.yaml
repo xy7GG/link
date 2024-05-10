@@ -57,5 +57,5 @@ rules:
         props:
           # AES 加密密钥
           aes-key-value: d6oadClrrb9A3GWo
-#props:
-#  sql-show: true
+props:
+  sql-show: true

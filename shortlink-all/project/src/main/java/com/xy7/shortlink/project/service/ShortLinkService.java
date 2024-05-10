@@ -9,6 +9,8 @@ import com.xy7.shortlink.project.dto.req.ShortLinkPageReqDTO;
 import com.xy7.shortlink.project.dto.req.ShortLinkUpdateReqDTO;
 import com.xy7.shortlink.project.dto.resp.ShortLinkCreateRespDTO;
 import com.xy7.shortlink.project.dto.resp.ShortLinkPageRespDTO;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
 
 import java.util.List;
 
@@ -47,6 +49,16 @@ public interface ShortLinkService extends IService<ShortLinkDO> {
      * @param requestParam 修改短链接请求参数
      */
     void updateShortLink(ShortLinkUpdateReqDTO requestParam);
+
+    /**
+     * 短链接跳转
+     *
+     * @param shortUri 短链接后缀
+     * @param request  HTTP 请求
+     * @param response HTTP 响应
+     */
+    void restoreUrl(String shortUri, ServletRequest request, ServletResponse response);
+
 
 }
 

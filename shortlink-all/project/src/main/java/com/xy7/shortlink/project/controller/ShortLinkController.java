@@ -10,6 +10,8 @@ import com.xy7.shortlink.project.dto.req.ShortLinkUpdateReqDTO;
 import com.xy7.shortlink.project.dto.resp.ShortLinkCreateRespDTO;
 import com.xy7.shortlink.project.dto.resp.ShortLinkPageRespDTO;
 import com.xy7.shortlink.project.service.ShortLinkService;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,5 +54,10 @@ public class ShortLinkController {
     public Result<Void> updateShortLink(@RequestBody ShortLinkUpdateReqDTO requestParam) {
         shortLinkService.updateShortLink(requestParam);
         return Results.success();
+    }
+
+    @GetMapping("/{short-uri}")
+    public void restoreUrl(@PathVariable("short-uri") String shortUri, ServletRequest request, ServletResponse response) {
+        shortLinkService.restoreUrl(shortUri, request, response);
     }
 }
