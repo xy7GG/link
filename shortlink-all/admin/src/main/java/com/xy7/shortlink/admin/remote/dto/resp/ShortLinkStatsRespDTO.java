@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.xy7.shortlink.admin.dto.resp;
+package com.xy7.shortlink.admin.remote.dto.resp;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

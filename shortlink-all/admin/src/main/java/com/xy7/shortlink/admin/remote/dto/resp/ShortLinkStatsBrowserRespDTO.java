@@ -15,41 +15,34 @@
  * limitations under the License.
  */
 
-package com.xy7.shortlink.admin.dto.resp;
+package com.xy7.shortlink.admin.remote.dto.resp;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 短链接基础访问监控响应参数
+ * 短链接浏览器监控响应参数
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ShortLinkStatsAccessDailyRespDTO {
+public class ShortLinkStatsBrowserRespDTO {
 
     /**
-     * 日期
+     * 统计
      */
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
-    private String date;
+    private Integer cnt;
 
     /**
-     * 访问量
+     * 浏览器
      */
-    private Integer pv;
+    private String browser;
 
     /**
-     * 独立访客数
+     * 占比
      */
-    private Integer uv;
-
-    /**
-     * 独立IP数
-     */
-    private Integer uip;
+    private Double ratio;
 }

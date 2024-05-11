@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.xy7.shortlink.admin.dto.resp;
+package com.xy7.shortlink.admin.remote.dto.resp;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,13 +23,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 短链接高频访问IP监控响应参数
+ * 短链接访问设备监控响应参数
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ShortLinkStatsTopIpRespDTO {
+public class ShortLinkStatsDeviceRespDTO {
 
     /**
      * 统计
@@ -37,7 +37,12 @@ public class ShortLinkStatsTopIpRespDTO {
     private Integer cnt;
 
     /**
-     * IP
+     * 设备类型
      */
-    private String ip;
+    private String device;
+
+    /**
+     * 占比
+     */
+    private Double ratio;
 }

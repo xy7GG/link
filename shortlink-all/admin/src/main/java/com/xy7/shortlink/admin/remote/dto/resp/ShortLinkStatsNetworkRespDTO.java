@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.xy7.shortlink.admin.dto.resp;
+package com.xy7.shortlink.admin.remote.dto.resp;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,13 +23,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 短链接操作系统监控响应参数
+ * 短链接访问网络监控响应参数
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ShortLinkStatsOsRespDTO {
+public class ShortLinkStatsNetworkRespDTO {
 
     /**
      * 统计
@@ -37,9 +37,9 @@ public class ShortLinkStatsOsRespDTO {
     private Integer cnt;
 
     /**
-     * 操作系统
+     * 访问网络
      */
-    private String os;
+    private String network;
 
     /**
      * 占比
