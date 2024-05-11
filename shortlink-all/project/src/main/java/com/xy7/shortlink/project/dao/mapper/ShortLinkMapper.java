@@ -52,10 +52,10 @@ public interface ShortLinkMapper extends BaseMapper<ShortLinkDO> {
             "<when test=\"#{param.orderTag} == 'todayUip'\">" +
             "ORDER BY todayUip DESC " +
             "</when>" +
-            "<when test=\"#{param.orderTag} == 'totalPv'\">" +
+            "<when test=\"#{param.orderTag} == 'totalUv'\">" +
             "ORDER BY t.total_uv DESC " +
             "</when>" +
-            "<when test=\"#{param.orderTag} == 'totalUv'\">" +
+            "<when test=\"#{param.orderTag} == 'totalPv'\">" +
             "ORDER BY t.total_pv DESC " +
             "</when>" +
             "<when test=\"#{param.orderTag} == 'totalUip'\">" +
