@@ -137,8 +137,8 @@ const loginFormRef1 = ref()
 const loginFormRef2 = ref()
 const router = useRouter()
 const loginForm = reactive({
-  username: 'admin',
-  password: 'admin123456',
+  username: '',
+  password: '',
 })
 const addForm = reactive({
   username: '',
@@ -218,13 +218,8 @@ const addUser = (formEl) => {
 
 }
 // 公众号验证码
-const isWC = ref(false)
-const verificationRef = ref()
 const verification = reactive({
   code: ''
-})
-const verificationRule = reactive({
-  code: [{ required: true, message: '请输入验证码', trigger: 'blur' }]
 })
 const verificationLogin = (formEl) => {
   if (!formEl) return
@@ -265,12 +260,6 @@ const login = (formEl) => {
   if (!formEl) return
   formEl.validate(async (valid) => {
     if (valid) {
-      // 当域名为下面这两个时，弹出公众号弹框
-      let domain = window.location.host
-      if (domain === 'shortlink.magestack.cn' || domain === 'shortlink.nageoffer.com') {
-        isWC.value = true
-        return
-      }
       const res1 = await API.user.login(loginForm)
       if (res1.data.code === '0') {
         const token = res1?.data?.data?.token
