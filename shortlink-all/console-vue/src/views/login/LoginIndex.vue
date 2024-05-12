@@ -1,6 +1,5 @@
 <template>
   <div class="login-page">
-    <h1 class="title">SaaS 短 链 接 平 台(马丁)</h1>
     <div class="login-box">
       <!-- 登录 -->
       <div class="logon" :class="{ hidden: !isLogin }">
@@ -102,25 +101,6 @@
     </div>
     <div ref="vantaRef" class="vanta"></div>
   </div>
-  <el-dialog v-model="isWC" title="人机验证" width="40%" :before-close="handleClose">
-    <div class="verification-flex">
-      <span>扫码下方二维码，关注后回复：<strong><span style="color:blue;">link</span></strong>，获取拿个offer-SaaS短链接系统人机验证码</span>
-      <img class="img" src="@/assets/png/公众号二维码.png" alt="">
-      <el-form class="form" :model="verification" :rules="verificationRule" ref="verificationRef">
-        <el-form-item prop="code" label="验证码">
-          <el-input v-model="verification.code" />
-        </el-form-item>
-      </el-form>
-    </div>
-    <template #footer>
-      <span class="dialog-footer">
-        <el-button @click="isWC = false">取消</el-button>
-        <el-button type="primary" @click="verificationLogin(verificationRef)">
-          确认
-        </el-button>
-      </span>
-    </template>
-  </el-dialog>
   <!-- </template> -->
 </template>
 
