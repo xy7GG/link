@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xy7.shortlink.project.dao.entity.ShortLinkDO;
 import com.xy7.shortlink.project.dto.req.ShortLinkPageReqDTO;
+import com.xy7.shortlink.project.dto.req.ShortLinkRecycleBinPageReqDTO;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -19,7 +20,12 @@ public interface ShortLinkMapper extends BaseMapper<ShortLinkDO> {
     /**
      * 短链接访问统计自增
      */
-    @Update("update t_link set total_pv = total_pv + #{totalPv}, total_uv = total_uv + #{totalUv}, total_uip = total_uip + #{totalUip} where gid = #{gid} and full_short_url = #{fullShortUrl}")
+    @Update("update t_link " +
+            "set total_pv = total_pv + #{totalPv}, " +
+            "   total_uv = total_uv + #{totalUv}, " +
+            "   total_uip = total_uip + #{totalUip} " +
+            "where gid = #{gid} " +
+            "   and full_short_url = #{fullShortUrl}")
     void incrementStats(
             @Param("gid") String gid,
             @Param("fullShortUrl") String fullShortUrl,
@@ -68,5 +74,24 @@ public interface ShortLinkMapper extends BaseMapper<ShortLinkDO> {
             "</script>")
     IPage<ShortLinkDO> pageLink(@Param("param") ShortLinkPageReqDTO requestParam);
 
-
+    /**
+     * 分页统计回收站短链接
+     */
+    @Select("<script>" +
+            "SELECT t.*, " +
+            "COALESCE(s.today_pv, 0) AS todayPv, " +
+            "COALESCE(s.today_uv, 0) AS todayUv, " +
+            "COALESCE(s.today_uip, 0) AS todayUip " +
+            "FROM t_link t " +
+            "LEFT JOIN t_link_stats_today s ON t.full_short_url = s.full_short_url " +
+            "AND s.date = CURDATE() " +
+            "WHERE t.gid IN " +
+            "<foreach item='item' index='index' collection='gidList' open='(' separator=',' close=')'> " +
+            "  #{item} " +
+            "</foreach> " +
+            "AND t.enable_status = 1 " +
+            "AND t.del_flag = 0 " +
+            "ORDER by t.update_time " +
+            "</script>")
+    IPage<ShortLinkDO> pageRecycleBinLink(ShortLinkRecycleBinPageReqDTO requestParam);
 }

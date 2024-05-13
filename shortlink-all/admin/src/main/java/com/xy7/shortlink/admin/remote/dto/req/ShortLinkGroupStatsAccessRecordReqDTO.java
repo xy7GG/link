@@ -10,6 +10,11 @@ import lombok.Data;
 public class ShortLinkGroupStatsAccessRecordReqDTO extends Page {
 
     /**
+     * 完整短链接
+     */
+    private String fullShortUrl;
+
+    /**
      * 分组标识
      */
     private String gid;
@@ -23,4 +28,9 @@ public class ShortLinkGroupStatsAccessRecordReqDTO extends Page {
      * 结束日期
      */
     private String endDate;
+
+    /**
+     * 启用标识 0：启用 1：未启用
+     */
+    private Integer enableStatus;
 }
