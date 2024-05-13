@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static com.xy7.shortlink.admin.common.constant.RedisCacheConstant.USER_LOGIN_KEY;
+import static com.xy7.shortlink.admin.common.enums.UserErrorCodeEnum.USER_TOKEN_FAIL;
 
 /**
  * 用户信息传输过滤器
@@ -44,17 +45,17 @@ public class UserTransmitFilter implements Filter {
                 String username = httpServletRequest.getHeader("username");
                 String token = httpServletRequest.getHeader("token");
                 if (!StrUtil.isAllNotBlank(username, token)) {
-                    returnJson((HttpServletResponse) servletResponse, JSON.toJSONString(Results.failure(new ClientException(UserErrorCodeEnum.USER_TOKEN_FAIL))));
+                    returnJson((HttpServletResponse) servletResponse, JSON.toJSONString(Results.failure(new ClientException(USER_TOKEN_FAIL))));
                     return;
                 }
                 Object userInfoJsonStr;
                 try {
                     userInfoJsonStr = stringRedisTemplate.opsForHash().get(USER_LOGIN_KEY + username, token);
                     if (userInfoJsonStr == null) {
-                        throw new ClientException(UserErrorCodeEnum.USER_TOKEN_FAIL);
+                        throw new ClientException(USER_TOKEN_FAIL);
                     }
                 } catch (Exception ex) {
-                    returnJson((HttpServletResponse) servletResponse,  JSON.toJSONString(Results.failure(new ClientException(UserErrorCodeEnum.USER_TOKEN_FAIL))));
+                    returnJson((HttpServletResponse) servletResponse,  JSON.toJSONString(Results.failure(new ClientException(USER_TOKEN_FAIL))));
                     return;
                 }
                 UserInfoDTO userInfoDTO = JSON.parseObject(userInfoJsonStr.toString(), UserInfoDTO.class);
