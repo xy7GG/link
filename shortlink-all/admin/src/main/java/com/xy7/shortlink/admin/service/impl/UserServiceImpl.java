@@ -77,7 +77,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
         try {
             int inserted = baseMapper.insert(BeanUtil.toBean(requestParam, UserDO.class));
             if (inserted < 1) {
-                throw new ClientException(USER_SAVE_ERROR);
+                throw new ServiceException(UserErrorCodeEnum.USER_NULL);
             }
             userRegisterCachePenetrationBloomFilter.add(requestParam.getUsername());
             groupService.saveGroup(requestParam.getUsername(), "默认分组");
