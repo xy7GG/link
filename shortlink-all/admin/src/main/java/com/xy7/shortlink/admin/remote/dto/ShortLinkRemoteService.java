@@ -5,6 +5,7 @@ import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.TypeReference;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xy7.shortlink.admin.common.convention.result.Result;
 import com.xy7.shortlink.admin.remote.dto.req.ShortLinkStatsReqDTO;
 import com.xy7.shortlink.admin.remote.dto.resp.*;
@@ -113,7 +114,7 @@ public interface ShortLinkRemoteService {
      * @param requestParam 分页短链接请求参数
      * @return 查询短链接响应
      */
-    default Result<IPage<ShortLinkPageRespDTO>> pageRecycleBinShortLink(ShortLinkRecycleBinPageReqDTO requestParam) {
+    default Result<Page<ShortLinkPageRespDTO>> pageRecycleBinShortLink(ShortLinkRecycleBinPageReqDTO requestParam) {
         Map<String, Object> requestMap = new HashMap<>();
         requestMap.put("gidList", requestParam.getGidList());
         requestMap.put("current", requestParam.getCurrent());
