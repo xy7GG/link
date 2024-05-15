@@ -117,8 +117,8 @@ const loginFormRef1 = ref()
 const loginFormRef2 = ref()
 const router = useRouter()
 const loginForm = reactive({
-  username: '',
-  password: '',
+  username: 'lisa',
+  password: '12345678',
 })
 const addForm = reactive({
   username: '',
