@@ -9,7 +9,7 @@ spring:
     url: jdbc:shardingsphere:classpath:shardingsphere-config-${database.env:dev}.yaml
   data:
     redis:
-      host: 43.139.204.197
+      host: 120.46.212.99
       port: 6379
       password: 123456
   mvc:
@@ -22,7 +22,7 @@ spring:
         server-addr: 43.139.204.197:8848
 
 rocketmq:
-  name-server: 43.139.204.197:9876
+  name-server: 120.46.212.99:9876
   producer:
     group: short-link_project-service_stats-save_pg
     topic: short-link_project-service_topic

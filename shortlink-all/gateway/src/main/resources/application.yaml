@@ -5,7 +5,7 @@ spring:
     name: short-link-gateway
   data:
     redis:
-      host: 43.139.204.197
+      host: 120.46.212.99
       port: 6379
       password: 123456
   cloud:
