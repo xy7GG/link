@@ -3,7 +3,7 @@
     <el-container>
       <el-header height="54px" style="padding: 0">
         <div class="header">
-          <div @click="toMySpace" class="logo">短链接</div>
+          <div @click="toMySpace" class="logo">小企短链接</div>
           <div style="display: flex; align-items: center">
             <el-dropdown>
               <div class="block">
