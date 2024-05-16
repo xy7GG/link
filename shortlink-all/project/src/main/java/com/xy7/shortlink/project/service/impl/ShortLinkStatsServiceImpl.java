@@ -37,6 +37,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 /**
  * 短链接监控接口实现层
@@ -421,26 +422,25 @@ public class ShortLinkStatsServiceImpl implements ShortLinkStatsService {
                 .orderByDesc(LinkAccessLogsDO::getCreateTime);
         IPage<LinkAccessLogsDO> linkAccessLogsDOIPage = linkAccessLogsMapper.selectPage(requestParam, queryWrapper);
         IPage<ShortLinkStatsAccessRecordRespDTO> actualResult = linkAccessLogsDOIPage.convert(each -> BeanUtil.toBean(each, ShortLinkStatsAccessRecordRespDTO.class));
-        List<String> userAccessLogsList = actualResult.getRecords().stream()
+        Set<String> userAccessLogsSet = actualResult.getRecords().stream()
                 .map(ShortLinkStatsAccessRecordRespDTO::getUser)
-                .toList();
-        List<Map<String, Object>> uvTypeList = linkAccessLogsMapper.selectUvTypeByUsers(
-                requestParam.getGid(),
-                requestParam.getFullShortUrl(),
-                requestParam.getEnableStatus(),
-                requestParam.getStartDate(),
-                requestParam.getEndDate(),
-                userAccessLogsList
-        );
-        actualResult.getRecords().forEach(each -> {
-            String uvType = uvTypeList.stream()
-                    .filter(item -> Objects.equals(each.getUser(), item.get("user")))
-                    .findFirst()
-                    .map(item -> item.get("uvType"))
-                    .map(Object::toString)
-                    .orElse("旧访客");
-            each.setUvType(uvType);
-        });
+                .collect(Collectors.toSet());
+        if(!userAccessLogsSet.isEmpty()){
+            List<Map<String, Object>> uvTypeList = linkAccessLogsMapper.selectUvTypeByUsers(
+                    requestParam.getGid(),
+                    requestParam.getFullShortUrl(),
+                    userAccessLogsSet
+            );
+            actualResult.getRecords().forEach(each -> {
+                String uvType = uvTypeList.stream()
+                        .filter(item -> Objects.equals(each.getId(), item.get("id")))
+                        .findFirst()
+                        .map(item -> item.get("uvType"))
+                        .map(Object::toString)
+                        .orElse("旧访客");
+                each.setUvType(uvType);
+            });
+        }
         return actualResult;
     }
 
