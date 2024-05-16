@@ -40,7 +40,6 @@ import java.util.Optional;
 
 /**
  * 全局异常处理器
- * 公众号：马丁玩编程，回复：加群，添加马哥微信（备注：link）获取项目资料
  */
 @Component("globalExceptionHandlerByAdmin")
 @Slf4j
@@ -81,12 +80,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = Throwable.class)
     public Result defaultErrorHandler(HttpServletRequest request, Throwable throwable) {
         log.error("[{}] {} ", request.getMethod(), getUrl(request), throwable);
-        // 注意，此处是为了聚合模式添加的代码，正常不需要该判断
-        if (Objects.equals(throwable.getClass().getSuperclass().getSimpleName(), AbstractException.class.getSimpleName())) {
-            String errorCode = ReflectUtil.getFieldValue(throwable, "errorCode").toString();
-            String errorMessage = ReflectUtil.getFieldValue(throwable, "errorMessage").toString();
-            return Results.failure(errorCode, errorMessage);
-        }
         return Results.failure();
     }
 
