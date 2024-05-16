@@ -54,7 +54,6 @@ public interface LinkOsStatsMapper extends BaseMapper<LinkOsStatsDO> {
             "    tlos.full_short_url = #{param.fullShortUrl} " +
             "    AND tl.gid = #{param.gid} " +
             "    AND tl.del_flag = '0' " +
-            "    AND tl.enable_status = #{param.enableStatus} " +
             "    AND tlos.date BETWEEN #{param.startDate} and #{param.endDate} " +
             "GROUP BY " +
             "    tlos.full_short_url, tl.gid, tlos.os;")

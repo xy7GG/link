@@ -53,7 +53,6 @@ public interface LinkDeviceStatsMapper extends BaseMapper<LinkDeviceStatsDO> {
             "    tlds.full_short_url = #{param.fullShortUrl} " +
             "    AND tl.gid = #{param.gid} " +
             "    AND tl.del_flag = '0' " +
-            "    AND tl.enable_status = #{param.enableStatus} " +
             "    AND tlds.date BETWEEN #{param.startDate} and #{param.endDate} " +
             "GROUP BY " +
             "    tlds.full_short_url, tl.gid, tlds.device;")

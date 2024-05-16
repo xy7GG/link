@@ -30,6 +30,7 @@ import org.apache.ibatis.annotations.Select;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 访问日志监控持久层
@@ -50,7 +51,6 @@ public interface LinkAccessLogsMapper extends BaseMapper<LinkAccessLogsDO> {
             "    tlal.full_short_url = #{param.fullShortUrl} " +
             "    AND tl.gid = #{param.gid} " +
             "    AND tl.del_flag = '0' " +
-            "    AND tl.enable_status = #{param.enableStatus} " +
             "    AND tlal.create_time BETWEEN #{param.startDate} and #{param.endDate} " +
             "GROUP BY " +
             "    tlal.full_short_url, tl.gid, tlal.ip " +
@@ -96,7 +96,6 @@ public interface LinkAccessLogsMapper extends BaseMapper<LinkAccessLogsDO> {
             "    WHERE " +
             "        tlal.full_short_url = #{param.fullShortUrl} " +
             "        AND tl.gid = #{param.gid} " +
-            "        AND tl.enable_status = #{param.enableStatus} " +
             "        AND tl.del_flag = '0' " +
             "    GROUP BY " +
             "        tlal.user " +
@@ -108,33 +107,36 @@ public interface LinkAccessLogsMapper extends BaseMapper<LinkAccessLogsDO> {
      */
     @Select("<script> " +
             "SELECT " +
-            "    tlal.user, " +
-            "    CASE " +
-            "        WHEN MIN(tlal.create_time) BETWEEN #{startDate} AND #{endDate} THEN '新访客' " +
-            "        ELSE '老访客' " +
-            "    END AS uvType " +
-            "FROM " +
-            "    t_link tl INNER JOIN " +
-            "    t_link_access_logs tlal ON tl.full_short_url = tlal.full_short_url " +
-            "WHERE " +
-            "    tlal.full_short_url = #{fullShortUrl} " +
-            "    AND tl.gid = #{gid} " +
-            "    AND tl.del_flag = '0' " +
-            "    AND tl.enable_status = #{enableStatus} " +
-            "    AND tlal.user IN " +
-            "    <foreach item='item' index='index' collection='userAccessLogsList' open='(' separator=',' close=')'> " +
-            "        #{item} " +
-            "    </foreach> " +
-            "GROUP BY " +
-            "    tlal.user;" +
+            "    subquery.id, " +
+            "    CASE  " +
+            "        WHEN subquery.total_user_count = 1 THEN '新访客' " +
+            "        WHEN subquery.total_user_count > 1 AND subquery.create_time = subquery.first_create_time THEN '新访客'  " +
+            "        ELSE '老访客'  " +
+            "    END AS uvType  " +
+            "FROM (  " +
+            "    SELECT   " +
+            "         tlal.id,  " +
+            "         tlal.user,  " +
+            "         tlal.create_time,  " +
+            "         (SELECT COUNT(tlal_inner.user) FROM t_link_access_logs tlal_inner WHERE tlal_inner.user = tlal.user) AS total_user_count,  " +
+            "         (SELECT MIN(tlal_inner.create_time) FROM t_link_access_logs tlal_inner WHERE tlal_inner.user = tlal.user) AS first_create_time  " +
+            "    FROM  " +
+            "         t_link tl  " +
+            "         INNER JOIN t_link_access_logs tlal ON tl.full_short_url = tlal.full_short_url   " +
+            "    WHERE  " +
+            "         tlal.full_short_url = #{fullShortUrl}  " +
+            "         AND tl.gid = #{gid}  " +
+            "         AND tl.del_flag = '0'  " +
+            "         AND tlal.user IN  " +
+            "         <foreach item=\"item\" index=\"index\" collection=\"userAccessLogsSet\" open=\"(\" separator=\",\" close=\")\">  " +
+            "             #{item}   " +
+            "         </foreach>   " +
+            ") AS subquery" +
             "</script>")
     List<Map<String, Object>> selectUvTypeByUsers(
             @Param("gid") String gid,
             @Param("fullShortUrl") String fullShortUrl,
-            @Param("enableStatus") Integer enableStatus,
-            @Param("startDate") String startDate,
-            @Param("endDate") String endDate,
-            @Param("userAccessLogsList") List<String> userAccessLogsList
+            @Param("userAccessLogsSet") Set<String> userAccessLogsSet
     );
 
     /**
@@ -182,7 +184,6 @@ public interface LinkAccessLogsMapper extends BaseMapper<LinkAccessLogsDO> {
             "    tlal.full_short_url = #{param.fullShortUrl} " +
             "    AND tl.gid = #{param.gid} " +
             "    AND tl.del_flag = '0' " +
-            "    AND tl.enable_status = #{param.enableStatus} " +
             "    AND tlal.create_time BETWEEN #{param.startDate} and #{param.endDate} " +
             "GROUP BY " +
             "    tlal.full_short_url, tl.gid;")
