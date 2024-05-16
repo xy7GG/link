@@ -438,7 +438,7 @@ const tableGid = ref()
 const chartsVisible = async (rowInfo, dateList) => {
   chartsInfoTitle.value = rowInfo?.describe
   // 如果传入的group为true的话就查询分组的数据，如果没传就查询单链的数据
-  const { fullShortUrl, gid, group, originUrl, favicon, enableStatus } = rowInfo
+  const { fullShortUrl, gid, group, originUrl, favicon } = rowInfo
   originUrl1.value = originUrl
   favicon1.value = favicon
   isGroup.value = group
@@ -462,8 +462,8 @@ const chartsVisible = async (rowInfo, dateList) => {
     res = await API.group.queryGroupStats({ ...statsFormData, fullShortUrl, gid })
     tableRes = await API.group.queryGroupTable({ gid, ...statsFormData })
   } else {
-    res = await API.smallLinkPage.queryLinkStats({ ...statsFormData, fullShortUrl, gid, enableStatus })
-    tableRes = await API.smallLinkPage.queryLinkTable({ gid, fullShortUrl, ...statsFormData, enableStatus })
+    res = await API.smallLinkPage.queryLinkStats({ ...statsFormData, fullShortUrl, gid })
+    tableRes = await API.smallLinkPage.queryLinkTable({ gid, fullShortUrl, ...statsFormData })
   }
   tableInfo.value = tableRes
   chartsInfo.value = res?.data?.data
@@ -478,8 +478,8 @@ const changeTimeData = async (rowInfo, dateList) => {
     initStatsFormData()
   } else {
     // 否则就按照传过来的数据去请求数据
-    statsFormData.startDate = dateList?.[0] + ' 00:00:00'
-    statsFormData.endDate = dateList?.[1] + ' 23:59:59'
+    statsFormData.startDate = dateList?.[0]
+    statsFormData.endDate = dateList?.[1]
   }
   let res = null
   let tableRes = null
