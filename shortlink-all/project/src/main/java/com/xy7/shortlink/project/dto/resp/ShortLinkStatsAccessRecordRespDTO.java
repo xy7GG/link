@@ -33,7 +33,10 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ShortLinkStatsAccessRecordRespDTO {
-
+    /**
+     * 访问日志监控实体
+     */
+    private Long id;
     /**
      * 访客类型
      */
