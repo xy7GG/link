@@ -102,8 +102,8 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, GroupDO> implemen
     public List<ShortLinkGroupRespDTO> listGroup() {
         LambdaQueryWrapper<GroupDO> queryWrapper = Wrappers.lambdaQuery(GroupDO.class)
                 .eq(GroupDO::getDelFlag, 0)
-                .eq(GroupDO::getUsername, UserContext.getUsername());
-//                .orderByDesc(GroupDO::getSortOrder, GroupDO::getUpdateTime);
+                .eq(GroupDO::getUsername, UserContext.getUsername())
+                .orderByDesc(GroupDO::getSortOrder, GroupDO::getUpdateTime);
         List<GroupDO> groupDOList = baseMapper.selectList(queryWrapper);
         Result<List<ShortLinkGroupCountQueryRespDTO>> listResult = shortLinkActualRemoteService
                 .listGroupShortLinkCount(groupDOList.stream().map(GroupDO::getGid).toList());

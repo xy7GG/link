@@ -65,7 +65,7 @@ public class ShortLinkController {
         Result<ShortLinkBatchCreateRespDTO> shortLinkBatchCreateRespDTOResult = shortLinkActualRemoteService.batchCreateShortLink(requestParam);
         if (shortLinkBatchCreateRespDTOResult.isSuccess()) {
             List<ShortLinkBaseInfoRespDTO> baseLinkInfos = shortLinkBatchCreateRespDTOResult.getData().getBaseLinkInfos();
-            EasyExcelWebUtil.write(response, "批量创建短链接-SaaS短链接系统", ShortLinkBaseInfoRespDTO.class, baseLinkInfos);
+            EasyExcelWebUtil.write(response, "批量创建短链接", ShortLinkBaseInfoRespDTO.class, baseLinkInfos);
         }
     }
 
