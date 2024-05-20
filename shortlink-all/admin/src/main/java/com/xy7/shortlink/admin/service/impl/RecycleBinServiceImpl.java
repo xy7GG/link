@@ -27,6 +27,7 @@ import com.xy7.shortlink.admin.common.convention.exception.ServiceException;
 import com.xy7.shortlink.admin.common.convention.result.Result;
 import com.xy7.shortlink.admin.dao.entity.GroupDO;
 import com.xy7.shortlink.admin.dao.mapper.GroupMapper;
+import com.xy7.shortlink.admin.remote.dto.ShortLinkActualRemoteService;
 import com.xy7.shortlink.admin.remote.dto.ShortLinkRemoteService;
 import com.xy7.shortlink.admin.remote.dto.req.ShortLinkRecycleBinPageReqDTO;
 import com.xy7.shortlink.admin.remote.dto.resp.ShortLinkPageRespDTO;
@@ -43,13 +44,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RecycleBinServiceImpl implements RecycleBinService {
 
+    private final ShortLinkActualRemoteService shortLinkActualRemoteService;
     private final GroupMapper groupMapper;
-
-    /**
-     * 后续重构为 SpringCloud Feign 调用
-     */
-    ShortLinkRemoteService shortLinkRemoteService = new ShortLinkRemoteService() {
-    };
 
     @Override
     public Result<Page<ShortLinkPageRespDTO>> pageRecycleBinShortLink(ShortLinkRecycleBinPageReqDTO requestParam) {
@@ -61,6 +57,6 @@ public class RecycleBinServiceImpl implements RecycleBinService {
             throw new ServiceException("用户无分组信息");
         }
         requestParam.setGidList(groupDOList.stream().map(GroupDO::getGid).toList());
-        return shortLinkRemoteService.pageRecycleBinShortLink(requestParam);
+        return shortLinkActualRemoteService.pageRecycleBinShortLink(requestParam.getGidList(), requestParam.getCurrent(), requestParam.getSize());
     }
 }
