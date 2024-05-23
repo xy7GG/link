@@ -35,7 +35,7 @@ public class RBloomFilterConfiguration {
     public RBloomFilter<String> userRegisterCachePenetrationBloomFilter(RedissonClient redissonClient) {
         RBloomFilter<String> cachePenetrationBloomFilter = redissonClient.getBloomFilter("userRegisterCachePenetrationBloomFilter");
         //初始化布隆过滤器，元素大小，错误率
-        cachePenetrationBloomFilter.tryInit(100000000L, 0.001);
+        cachePenetrationBloomFilter.tryInit(50000000L, 0.001);
         return cachePenetrationBloomFilter;
     }
 }
