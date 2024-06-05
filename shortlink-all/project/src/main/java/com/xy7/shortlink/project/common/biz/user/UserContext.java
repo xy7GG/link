@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-package com.xy7.shortlink.admin.common.biz.user;
+package com.xy7.shortlink.project.common.biz.user;
 
 import com.alibaba.ttl.TransmittableThreadLocal;
-import com.xy7.shortlink.admin.dto.req.UserInfoDTO;
 
 import java.util.Optional;
 

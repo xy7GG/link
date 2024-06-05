@@ -15,36 +15,25 @@
  * limitations under the License.
  */
 
-package com.xy7.shortlink.admin.common.biz.user;
+package com.xy7.shortlink.admin.config;
 
-import com.alibaba.fastjson2.annotation.JSONField;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.xy7.shortlink.admin.common.biz.user.UserContext;
+import feign.RequestInterceptor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
- * 用户信息实体
+ * openFeign 微服务调用传递用户信息配置
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class UserInfoDTO {
+@Configuration
+public class OpenFeignConfiguration {
 
-    /**
-     * 用户 ID
-     */
-    @JSONField(name = "id")
-    private String userId;
-
-    /**
-     * 用户名
-     */
-    private String username;
-
-    /**
-     * 真实姓名
-     */
-    private String realName;
+    @Bean
+    public RequestInterceptor requestInterceptor() {
+        return template -> {
+            template.header("username", UserContext.getUsername());
+            template.header("userId", UserContext.getUserId());
+            template.header("realName", UserContext.getRealName());
+        };
+    }
 }

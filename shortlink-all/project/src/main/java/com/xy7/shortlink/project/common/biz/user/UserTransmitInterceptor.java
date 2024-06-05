@@ -15,36 +15,35 @@
  * limitations under the License.
  */
 
-package com.xy7.shortlink.admin.common.biz.user;
+package com.xy7.shortlink.project.common.biz.user;
 
 import cn.hutool.core.util.StrUtil;
-import com.xy7.shortlink.admin.dto.req.UserInfoDTO;
-import jakarta.servlet.*;
+import jakarta.annotation.Nullable;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.HandlerInterceptor;
 
 /**
- * 用户信息传输过滤器
+ * 用户信息传输拦截器
  */
-@RequiredArgsConstructor
-public class UserTransmitFilter implements Filter {
+@Component
+public class UserTransmitInterceptor implements HandlerInterceptor {
 
-    @SneakyThrows
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) {
-        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
-        String username = httpServletRequest.getHeader("username");
+    public boolean preHandle(@Nullable HttpServletRequest request, @Nullable HttpServletResponse response, @Nullable Object handler) throws Exception {
+        String username = request.getHeader("username");
         if (StrUtil.isNotBlank(username)) {
-            String userId = httpServletRequest.getHeader("userId");
-            String realName = httpServletRequest.getHeader("realName");
+            String userId = request.getHeader("userId");
+            String realName = request.getHeader("realName");
             UserInfoDTO userInfoDTO = new UserInfoDTO(userId, username, realName);
             UserContext.setUser(userInfoDTO);
         }
-        try {
-            filterChain.doFilter(servletRequest, servletResponse);
-        } finally {
-            UserContext.removeUser();
-        }
+        return true;
+    }
+
+    @Override
+    public void afterCompletion(@Nullable HttpServletRequest request, @Nullable HttpServletResponse response, @Nullable Object handler, Exception exception) throws Exception {
+        UserContext.removeUser();
     }
 }

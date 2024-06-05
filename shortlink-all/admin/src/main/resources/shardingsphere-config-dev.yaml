@@ -2,9 +2,9 @@ dataSources:
   ds_0:
     dataSourceClassName: com.zaxxer.hikari.HikariDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
-    jdbcUrl: jdbc:mysql://bj-cynosdbmysql-grp-bbar73yo.sql.tencentcdb.com:22983/link?useUnicode=true&characterEncoding=UTF-8&rewriteBatchedStatements=true&allowMultiQueries=true&serverTimezone=Asia/Shanghai
-    username: link
-    password: qaz//0@@
+    jdbcUrl: jdbc:mysql://43.139.204.197:3306/link?useUnicode=true&characterEncoding=UTF-8&rewriteBatchedStatements=true&allowMultiQueries=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
 
 rules:
   - !SHARDING
@@ -58,4 +58,4 @@ rules:
           # AES 加密密钥
           aes-key-value: d6oadClrrb9A3GWo
 props:
-  sql-show: true
+  sql-show: false

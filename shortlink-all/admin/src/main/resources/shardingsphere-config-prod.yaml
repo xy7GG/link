@@ -47,4 +47,4 @@ rules:
         props:
           aes-key-value: d6oadClrrb9A3GWo
 props:
-  sql-show: true
+  sql-show: false
