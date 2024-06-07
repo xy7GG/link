@@ -12,6 +12,7 @@
     <artifactId>shortlink-admin</artifactId>
 
     <dependencies>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -79,6 +80,7 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-loadbalancer</artifactId>
         </dependency>
+
     </dependencies>
 
     <build>
