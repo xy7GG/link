@@ -1,0 +1,63 @@
+server:
+  port: 8003
+
+spring:
+  application:
+    name: short-link-aggregation
+  datasource:
+    driver-class-name: org.apache.shardingsphere.driver.ShardingSphereDriver
+    url: jdbc:shardingsphere:classpath:shardingsphere-config-${database.env:dev}.yaml
+  data:
+    redis:
+      host: 1.92.99.22
+      port: 6379
+      password: JN58fote
+  mvc:
+    view:
+      prefix: /templates/
+      suffix: .html
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 43.139.204.197:8848
+
+aggregation:
+  remote-url: http://127.0.0.1:${server.port}
+
+short-link:
+  group:
+    max-num: 20
+  flow-limit:
+    enable: true
+    time-window: 1
+    max-access-count: 20
+  domain:
+    default: 127.0.0.1:8003
+  stats:
+    locale:
+      amap-key: 5fcb9ed025328b920fc938167b3408ba
+  goto-domain:
+    white-list:
+      enable: false
+      names: '拿个offer,知乎,掘金,博客园'
+      details:
+        - nageoffer.com
+        - zhihu.com
+        - juejin.cn
+        - cnblogs.com
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:mapper/*.xml
+
+rocketmq:
+  name-server: 120.46.212.99:9876
+  producer:
+    group: short-link_project-service_stats-save_pg
+    topic: short-link_project-service_topic
+    send-message-timeout: 2000
+    retry-times-when-send-failed: 1
+    retry-times-when-send-async-failed: 1
+  consumer:
+    group: short-link_project-service_stats-save_cg

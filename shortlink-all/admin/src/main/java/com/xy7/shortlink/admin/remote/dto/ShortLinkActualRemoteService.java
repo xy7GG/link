@@ -35,6 +35,7 @@ import java.util.List;
  */
 @FeignClient(
         value = "short-link-project",
+        url = "${aggregation.remote-url:}",
         configuration = OpenFeignConfiguration.class
 )
 public interface ShortLinkActualRemoteService {

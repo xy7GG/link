@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.xy7.shortlink.project.config;
+package com.xy7.shortlink.admin.config;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
@@ -24,7 +24,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
+@Configuration(value = "dataBaseConfigurationByAdmin")
 public class DataBaseConfiguration {
 
     /**
@@ -32,7 +32,7 @@ public class DataBaseConfiguration {
      */
     @Bean
     @ConditionalOnMissingBean
-    public MybatisPlusInterceptor mybatisPlusInterceptor() {
+    public MybatisPlusInterceptor mybatisPlusInterceptorByAdmin() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
         interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
         return interceptor;

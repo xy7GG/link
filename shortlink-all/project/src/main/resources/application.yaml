@@ -9,9 +9,9 @@ spring:
     url: jdbc:shardingsphere:classpath:shardingsphere-config-${database.env:dev}.yaml
   data:
     redis:
-      host: 120.46.212.99
+      host: 1.92.99.22
       port: 6379
-      password: 123456
+      password: JN58fote
   mvc:
     view:
       prefix: /templates/
@@ -38,11 +38,11 @@ short-link:
   stats:
     locale:
       amap-key: 5fcb9ed025328b920fc938167b3408ba
-    goto-domain:
-      white-list:
-        enable: true
-        names: '知乎,掘金,博客园'
-        details:
-          - zhihu.com
-          - juejin.cn
-          - cnblogs.com
+  goto-domain:
+    white-list:
+      enable: false
+      names: '知乎,掘金,博客园'
+      details:
+        - zhihu.com
+        - juejin.cn
+        - cnblogs.com

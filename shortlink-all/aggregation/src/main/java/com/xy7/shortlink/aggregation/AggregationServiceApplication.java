@@ -15,24 +15,28 @@
  * limitations under the License.
  */
 
-package com.xy7.shortlink.admin.controller;
+package com.xy7.shortlink.aggregation;
 
-import com.baomidou.mybatisplus.annotation.DbType;
-import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
-@Configuration
-public class DataBaseConfiguration {
+/**
+ * 短链接聚合应用
+ */
+@EnableDiscoveryClient
+@SpringBootApplication(scanBasePackages = {
+        "com.xy7.shortlink.project",
+        "com.xy7.shortlink.admin"
+})
+@MapperScan(value = {
+        "com.xy7.shortlink.project.dao.mapper",
+        "com.xy7.shortlink.admin.dao.mapper"
+})
+public class AggregationServiceApplication {
 
-    /**
-     * 分页插件
-     */
-    @Bean
-    public MybatisPlusInterceptor mybatisPlusInterceptor() {
-        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
-        interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
-        return interceptor;
+    public static void main(String[] args) {
+        SpringApplication.run(AggregationServiceApplication.class, args);
     }
 }

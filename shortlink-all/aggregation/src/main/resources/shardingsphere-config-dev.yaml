@@ -9,6 +9,18 @@ dataSources:
 rules:
   - !SHARDING
     tables:
+      t_user:
+        actualDataNodes: ds_0.t_user_${0..15}
+        tableStrategy:
+          standard:
+            shardingColumn: username
+            shardingAlgorithmName: user_table_hash_mod
+      t_group:
+        actualDataNodes: ds_0.t_group_${0..15}
+        tableStrategy:
+          standard:
+            shardingColumn: username
+            shardingAlgorithmName: group_table_hash_mod
       t_link:
         actualDataNodes: ds_0.t_link_${0..15}
         tableStrategy:
@@ -21,13 +33,15 @@ rules:
           standard:
             shardingColumn: full_short_url
             shardingAlgorithmName: link_goto_table_hash_mod
-      t_group:
-        actualDataNodes: ds_0.t_group_${0..15}
-        tableStrategy:
-          standard:
-            shardingColumn: username
-            shardingAlgorithmName: group_table_hash_mod
     shardingAlgorithms:
+      user_table_hash_mod:
+        type: HASH_MOD
+        props:
+          sharding-count: 16
+      group_table_hash_mod:
+        type: HASH_MOD
+        props:
+          sharding-count: 16
       link_table_hash_mod:
         type: HASH_MOD
         props:
@@ -36,9 +50,21 @@ rules:
         type: HASH_MOD
         props:
           sharding-count: 16
-      group_table_hash_mod:
-        type: HASH_MOD
+  - !ENCRYPT
+    tables:
+      t_user:
+        columns:
+          phone:
+            cipherColumn: phone
+            encryptorName: common_encryptor
+          mail:
+            cipherColumn: mail
+            encryptorName: common_encryptor
+        queryWithCipherColumn: true
+    encryptors:
+      common_encryptor:
+        type: AES
         props:
-          sharding-count: 16
+          aes-key-value: d6oadClrrb9A3GWo
 props:
   sql-show: false
