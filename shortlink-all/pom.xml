@@ -14,6 +14,7 @@
         <module>gateway</module>
         <module>project</module>
         <module>aggregation</module>
+        <module>frameworks</module>
     </modules>
 
     <properties>
@@ -34,6 +35,7 @@
         <guava.version>30.0-jre</guava.version>
         <jsoup.version>1.15.3</jsoup.version>
         <skipTests>true</skipTests>
+        <transmittable-thread-local.version>2.14.2</transmittable-thread-local.version>
         <spotless-maven-plugin.version>2.22.1</spotless-maven-plugin.version>
     </properties>
 
@@ -74,6 +76,12 @@
                 <version>${spring-cloud-alibaba.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>transmittable-thread-local</artifactId>
+                <version>${transmittable-thread-local.version}</version>
             </dependency>
 
             <dependency>
