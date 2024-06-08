@@ -35,8 +35,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
-import static com.xy7.shortlink.project.common.constant.RedisKeyConstant.GOTO_IS_NULL_SHORT_LINK_KEY;
-import static com.xy7.shortlink.project.common.constant.RedisKeyConstant.GOTO_SHORT_LINK_KEY;
+import static com.xy7.shortlink.project.common.constant.RedisKeyConstant.*;
 
 /**
  * 回收站管理接口实现层
@@ -59,7 +58,6 @@ public class RecycleBinServiceImpl extends ServiceImpl<ShortLinkMapper, ShortLin
                 .build();
         baseMapper.update(delShortLinkDO, updateWrapper);
         stringRedisTemplate.delete(String.format(GOTO_SHORT_LINK_KEY, requestParam.getFullShortUrl()));
-
     }
 
     @Override
@@ -99,5 +97,7 @@ public class RecycleBinServiceImpl extends ServiceImpl<ShortLinkMapper, ShortLin
                 .build();
         delShortLinkDO.setDelFlag(1);
         baseMapper.update(delShortLinkDO, updateWrapper);
+        stringRedisTemplate.delete(String.format(SHORT_LINK_STATS_UV_KEY, requestParam.getFullShortUrl()));
+        stringRedisTemplate.delete(String.format(SHORT_LINK_STATS_UIP_KEY, requestParam.getFullShortUrl()));
     }
 }
