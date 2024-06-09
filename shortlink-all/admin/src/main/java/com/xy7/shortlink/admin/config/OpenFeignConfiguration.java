@@ -17,7 +17,7 @@
 
 package com.xy7.shortlink.admin.config;
 
-import com.xy7.shortlink.admin.common.biz.user.UserContext;
+import com.xy7.shortlink.framework.starter.user.core.UserContext;
 import feign.RequestInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

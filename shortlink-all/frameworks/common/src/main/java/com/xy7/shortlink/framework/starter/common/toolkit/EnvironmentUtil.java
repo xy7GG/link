@@ -17,7 +17,7 @@
 
 package com.xy7.shortlink.framework.starter.common.toolkit;
 
-import org.opengoofy.index12306.framework.starter.bases.ApplicationContextHolder;
+import com.xy7.shortlink.framework.starter.bases.ApplicationContextHolder;
 import org.springframework.core.env.ConfigurableEnvironment;
 
 import java.util.ArrayList;

@@ -18,10 +18,10 @@
 package com.xy7.shortlink.admin.remote.dto;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.xy7.shortlink.admin.common.convention.result.Result;
 import com.xy7.shortlink.admin.config.OpenFeignConfiguration;
 import com.xy7.shortlink.admin.remote.dto.req.*;
 import com.xy7.shortlink.admin.remote.dto.resp.*;
+import com.xy7.shortlink.framework.starter.convention.result.Result;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

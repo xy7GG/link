@@ -23,6 +23,8 @@ import com.xy7.shortlink.framework.starter.cache.core.CacheLoader;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.redisson.api.RBloomFilter;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
 

@@ -18,8 +18,8 @@
 package com.xy7.shortlink.project.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.xy7.shortlink.project.common.convention.result.Result;
-import com.xy7.shortlink.project.common.convention.result.Results;
+import com.xy7.shortlink.framework.starter.convention.result.Result;
+import com.xy7.shortlink.framework.starter.web.Results;
 import com.xy7.shortlink.project.dto.req.RecycleBinRecoverReqDTO;
 import com.xy7.shortlink.project.dto.req.RecycleBinRemoveReqDTO;
 import com.xy7.shortlink.project.dto.req.RecycleBinSaveReqDTO;

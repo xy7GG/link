@@ -18,8 +18,7 @@
 package com.xy7.shortlink.admin.controller;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.xy7.shortlink.admin.common.convention.result.Result;
-import com.xy7.shortlink.admin.common.convention.result.Results;
+import com.xy7.shortlink.admin.dto.req.UserDeletionReqDTO;
 import com.xy7.shortlink.admin.dto.req.UserLoginReqDTO;
 import com.xy7.shortlink.admin.dto.req.UserRegisterReqDTO;
 import com.xy7.shortlink.admin.dto.req.UserUpdateReqDTO;
@@ -27,6 +26,9 @@ import com.xy7.shortlink.admin.dto.resp.UserActualRespDTO;
 import com.xy7.shortlink.admin.dto.resp.UserLoginRespDTO;
 import com.xy7.shortlink.admin.dto.resp.UserRespDTO;
 import com.xy7.shortlink.admin.service.UserService;
+import com.xy7.shortlink.framework.starter.convention.result.Result;
+import com.xy7.shortlink.framework.starter.web.Results;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -66,7 +68,7 @@ public class UserController {
     /**
      * 注册用户
      */
-    @PostMapping("/api/short-link/admin/v1/user")
+    @PostMapping("/api/short-link/admin/v1/user/register")
     public Result<Void> register(@RequestBody UserRegisterReqDTO requestParam) {
         userService.register(requestParam);
         return Results.success();
@@ -75,7 +77,7 @@ public class UserController {
     /**
      * 修改用户
      */
-    @PutMapping("/api/short-link/admin/v1/user")
+    @PutMapping("/api/short-link/admin/v1/user/update")
     public Result<Void> update(@RequestBody UserUpdateReqDTO requestParam) {
         userService.update(requestParam);
         return Results.success();
@@ -93,16 +95,25 @@ public class UserController {
      * 检查用户是否登录
      */
     @GetMapping("/api/short-link/admin/v1/user/check-login")
-    public Result<Boolean> checkLogin(@RequestParam("username") String username, @RequestParam("token") String token) {
-        return Results.success(userService.checkLogin(username, token));
+    public Result<UserLoginRespDTO> checkLogin(@RequestParam("token") String token) {
+        return Results.success(userService.checkLogin(token));
     }
 
     /**
      * 用户退出登录
      */
     @DeleteMapping("/api/short-link/admin/v1/user/logout")
-    public Result<Void> logout(@RequestParam("username") String username, @RequestParam("token") String token) {
-        userService.logout(username, token);
+    public Result<Void> logout(@RequestParam("token") String token) {
+        userService.logout(token);
+        return Results.success();
+    }
+
+    /**
+     * 注销用户
+     */
+    @PostMapping("/api/short-link/admin/v1/user/deletion")
+    public Result<Void> deletion(@RequestBody @Valid UserDeletionReqDTO requestParam) {
+        userService.deletion(requestParam);
         return Results.success();
     }
 

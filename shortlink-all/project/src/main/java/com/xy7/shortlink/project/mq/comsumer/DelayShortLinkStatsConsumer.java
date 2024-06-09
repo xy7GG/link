@@ -17,7 +17,7 @@
 
 package com.xy7.shortlink.project.mq.comsumer;
 
-import com.xy7.shortlink.project.common.convention.exception.ServiceException;
+import com.xy7.shortlink.framework.starter.convention.exception.ServiceException;
 import com.xy7.shortlink.project.dto.biz.ShortLinkStatsRecordDTO;
 import com.xy7.shortlink.project.mq.idempotent.MessageQueueIdempotentHandler;
 import com.xy7.shortlink.project.service.ShortLinkService;

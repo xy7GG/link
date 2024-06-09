@@ -23,10 +23,10 @@ import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.TypeReference;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.xy7.shortlink.admin.common.convention.result.Result;
 import com.xy7.shortlink.admin.remote.dto.req.ShortLinkStatsReqDTO;
 import com.xy7.shortlink.admin.remote.dto.resp.*;
 import com.xy7.shortlink.admin.remote.dto.req.*;
+import com.xy7.shortlink.framework.starter.convention.result.Result;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.HashMap;

@@ -17,14 +17,13 @@
 
 package com.xy7.shortlink.admin.controller;
 
-
-import com.xy7.shortlink.admin.common.convention.result.Result;
-import com.xy7.shortlink.admin.common.convention.result.Results;
 import com.xy7.shortlink.admin.dto.req.ShortLinkGroupSaveReqDTO;
 import com.xy7.shortlink.admin.dto.req.ShortLinkGroupSortReqDTO;
 import com.xy7.shortlink.admin.dto.req.ShortLinkGroupUpdateReqDTO;
 import com.xy7.shortlink.admin.dto.resp.ShortLinkGroupRespDTO;
 import com.xy7.shortlink.admin.service.GroupService;
+import com.xy7.shortlink.framework.starter.convention.result.Result;
+import com.xy7.shortlink.framework.starter.web.Results;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

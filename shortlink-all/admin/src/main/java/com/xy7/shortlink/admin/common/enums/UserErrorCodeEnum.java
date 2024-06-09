@@ -17,20 +17,41 @@
 
 package com.xy7.shortlink.admin.common.enums;
 
-import com.xy7.shortlink.admin.common.convention.errorcode.IErrorCode;
+import com.xy7.shortlink.framework.starter.convention.errorcode.IErrorCode;
+
 /**
  * 用户错误码
+ * 公众号：马丁玩编程，回复：加群，添加马哥微信（备注：link）获取项目资料
  */
 public enum UserErrorCodeEnum implements IErrorCode {
 
-    USER_TOKEN_FAIL("A000200", "用户Token验证失败"),
     USER_NULL("B000200", "用户记录不存在"),
 
     USER_NAME_EXIST("B000201", "用户名已存在"),
 
     USER_EXIST("B000202", "用户记录已存在"),
 
-    USER_SAVE_ERROR("B000203", "用户记录新增失败");
+    USER_SAVE_ERROR("B000203", "用户记录新增失败"),
+
+    USER_REGISTER_FAIL("A006000", "用户注册失败"),
+
+    USER_NAME_NOTNULL("A006001", "用户名不能为空"),
+
+    PASSWORD_NOTNULL("A006002", "密码不能为空"),
+
+    PHONE_NOTNULL("A006003", "手机号不能为空"),
+
+    HAS_USERNAME_NOTNULL("A006006", "用户名已存在"),
+
+    PHONE_REGISTERED("A006007", "手机号已被占用"),
+
+    MAIL_REGISTERED("A006008", "邮箱已被占用"),
+
+    MAIL_NOTNULL("A006009", "邮箱不能为空"),
+
+    REAL_NAME_NOTNULL("A006015", "真实姓名不能为空"),
+
+    GROUP_CREATE_ERROR("C006012","分组创建失败");
 
     private final String code;
 

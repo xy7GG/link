@@ -45,7 +45,7 @@ public class ILogPrintAspect {
     /**
      * 打印类或方法上的 {@link ILog}
      */
-    @Around("@within(org.opengoofy.index12306.framework.starter.log.annotation.ILog) || @annotation(org.opengoofy.index12306.framework.starter.log.annotation.ILog)")
+    @Around("@within(com.xy7.shortlink.framework.starter.log.annotation.ILog) || @annotation(com.xy7.shortlink.framework.starter.log.annotation.ILog)")
     public Object printMLog(ProceedingJoinPoint joinPoint) throws Throwable {
         long startTime = SystemClock.now();
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();

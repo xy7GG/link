@@ -40,7 +40,7 @@ public final class InitializeDispatcherServletHandler implements CommandLineRunn
     @Override
     public void run(String... args) throws Exception {
         String url = String.format("http://127.0.0.1:%s%s",
-                configurableEnvironment.getProperty("server.port", "8080") + configurableEnvironment.getProperty("server.servlet.context-path", ""),
+                configurableEnvironment.getProperty("server.port", "8000") + configurableEnvironment.getProperty("server.servlet.context-path", ""),
                 INITIALIZE_PATH);
         try {
             restTemplate.execute(url, HttpMethod.GET, null, null);

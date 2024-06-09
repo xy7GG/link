@@ -8,9 +8,9 @@ spring:
 #     active: dev
   data:
     redis:
-      host: 1.92.99.22
+      host: 120.46.212.99
       port: 6379
-      password: JN58fote
+      password: 123456
   cloud:
     nacos:
       discovery:

@@ -81,6 +81,59 @@
             <artifactId>spring-cloud-loadbalancer</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.xy7.shortlink</groupId>
+            <artifactId>shortlink-base-spring-boot-start</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.xy7.shortlink</groupId>
+            <artifactId>shortlink-cache-spring-boot-starter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.xy7.shortlink</groupId>
+            <artifactId>shortlink-common-spring-boot-starter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.xy7.shortlink</groupId>
+            <artifactId>shortlink-convention-spring-boot-starter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.xy7.shortlink</groupId>
+            <artifactId>shortlink-idempotent-spring-boot-starter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.xy7.shortlink</groupId>
+            <artifactId>shortlink-user-spring-boot-starter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.xy7.shortlink</groupId>
+            <artifactId>shortlink-designpattern-spring-boot-starter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.xy7.shortlink</groupId>
+            <artifactId>shortlink-web-spring-boot-starter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.xy7.shortlink</groupId>
+            <artifactId>shortlink-database-spring-boot-starter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

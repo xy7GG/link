@@ -10,11 +10,28 @@ rules:
   - !SHARDING
     tables:
       t_user:
-        actualDataNodes: ds_0.t_user_${0..15}
+        actualDataNodes: ds_${0..1}.t_user_${0..15}
+        databaseStrategy:
+          standard:
+            shardingColumn: username
+            shardingAlgorithmName: user_database_hash_mod
         tableStrategy:
           standard:
             shardingColumn: username
             shardingAlgorithmName: user_table_hash_mod
+      t_user_mail:
+        actualDataNodes: ds_${0..1}.t_user_mail_${0..15}
+        tableStrategy:
+          standard:
+            shardingColumn: mail
+            shardingAlgorithmName: t_user_mail_table_hash_mod
+      t_user_phone:
+        actualDataNodes: ds_0.t_user_phone_${0..15}
+        tableStrategy:
+          standard:
+            shardingColumn: phone
+            shardingAlgorithmName: t_user_phone_table_hash_mod
+
       t_group:
         actualDataNodes: ds_0.t_group_${0..15}
         tableStrategy:

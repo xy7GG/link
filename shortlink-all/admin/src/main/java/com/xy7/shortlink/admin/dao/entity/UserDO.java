@@ -18,7 +18,7 @@
 package com.xy7.shortlink.admin.dao.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.xy7.shortlink.admin.common.database.BaseDO;
+import com.xy7.shortlink.framework.starter.database.base.BaseDO;
 import lombok.Data;
 
 @Data

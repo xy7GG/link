@@ -17,12 +17,8 @@
 
 package com.xy7.shortlink.admin.controller;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.xy7.shortlink.admin.common.convention.result.Result;
-import com.xy7.shortlink.admin.common.convention.result.Results;
 import com.xy7.shortlink.admin.remote.dto.ShortLinkActualRemoteService;
-import com.xy7.shortlink.admin.remote.dto.ShortLinkRemoteService;
 import com.xy7.shortlink.admin.remote.dto.req.ShortLinkBatchCreateReqDTO;
 import com.xy7.shortlink.admin.remote.dto.req.ShortLinkCreateReqDTO;
 import com.xy7.shortlink.admin.remote.dto.req.ShortLinkPageReqDTO;
@@ -32,6 +28,8 @@ import com.xy7.shortlink.admin.remote.dto.resp.ShortLinkBatchCreateRespDTO;
 import com.xy7.shortlink.admin.remote.dto.resp.ShortLinkCreateRespDTO;
 import com.xy7.shortlink.admin.remote.dto.resp.ShortLinkPageRespDTO;
 import com.xy7.shortlink.admin.toolkit.EasyExcelWebUtil;
+import com.xy7.shortlink.framework.starter.convention.result.Result;
+import com.xy7.shortlink.framework.starter.web.Results;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;

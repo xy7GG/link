@@ -39,11 +39,18 @@ public class DataBloomTest {
     @Test
     public void testRBloomFilter() {
 
-        String fullShortUrl_1 = "43.139.204.197:8001/2i1Uqb";
-        shortUriCreateCachePenetrationBloomFilter.add(fullShortUrl_1);
+//        String fullShortUrl_1 = "43.139.204.197:8001/2i1Uqb";
+//        shortUriCreateCachePenetrationBloomFilter.add(fullShortUrl_1);
 //        boolean contains = shortUriCreateCachePenetrationBloomFilter.contains(fullShortUrl);
 //        if(contains){
 //            log.info("存在");
 //        }
+    }
+
+    @Test
+    public void test() {
+        String username = "exampleUser";
+        int shardIndex = Math.abs(username.hashCode() % 1024);
+        System.out.println("Shard index: " + shardIndex);
     }
 }

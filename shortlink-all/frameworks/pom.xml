@@ -11,6 +11,7 @@
 
     <artifactId>shorklink-frameworks</artifactId>
     <packaging>pom</packaging>
+
     <modules>
         <module>idempotent</module>
         <module>base</module>
@@ -20,7 +21,8 @@
         <module>convention</module>
         <module>web</module>
         <module>user</module>
-        <module>user</module>
+        <module>designpattern</module>
+        <module>database</module>
     </modules>
 
 </project>

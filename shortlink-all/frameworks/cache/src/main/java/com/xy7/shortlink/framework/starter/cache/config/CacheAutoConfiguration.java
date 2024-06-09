@@ -20,6 +20,7 @@ package com.xy7.shortlink.framework.starter.cache.config;
 
 import com.xy7.shortlink.framework.starter.cache.RedisKeySerializer;
 import com.xy7.shortlink.framework.starter.cache.StringRedisTemplateProxy;
+import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 import org.redisson.api.RBloomFilter;
 import org.redisson.api.RedissonClient;
@@ -36,6 +37,12 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 public class CacheAutoConfiguration {
 
     private final RedisDistributedProperties redisDistributedProperties;
+
+    @PostConstruct
+    public void init() {
+        System.out.println("启动成功了");
+    }
+
 
     /**
      * 创建 Redis Key 序列化器，可自定义 Key Prefix

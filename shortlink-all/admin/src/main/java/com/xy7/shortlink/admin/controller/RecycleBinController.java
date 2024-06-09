@@ -17,18 +17,16 @@
 
 package com.xy7.shortlink.admin.controller;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.xy7.shortlink.admin.common.convention.result.Result;
-import com.xy7.shortlink.admin.common.convention.result.Results;
 import com.xy7.shortlink.admin.remote.dto.ShortLinkActualRemoteService;
-import com.xy7.shortlink.admin.remote.dto.ShortLinkRemoteService;
 import com.xy7.shortlink.admin.remote.dto.req.RecycleBinRecoverReqDTO;
 import com.xy7.shortlink.admin.remote.dto.req.RecycleBinRemoveReqDTO;
 import com.xy7.shortlink.admin.remote.dto.req.RecycleBinSaveReqDTO;
 import com.xy7.shortlink.admin.remote.dto.req.ShortLinkRecycleBinPageReqDTO;
 import com.xy7.shortlink.admin.remote.dto.resp.ShortLinkPageRespDTO;
 import com.xy7.shortlink.admin.service.RecycleBinService;
+import com.xy7.shortlink.framework.starter.convention.result.Result;
+import com.xy7.shortlink.framework.starter.web.Results;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

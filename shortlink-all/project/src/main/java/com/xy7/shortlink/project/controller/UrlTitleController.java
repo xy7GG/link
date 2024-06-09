@@ -17,8 +17,8 @@
 
 package com.xy7.shortlink.project.controller;
 
-import com.xy7.shortlink.project.common.convention.result.Result;
-import com.xy7.shortlink.project.common.convention.result.Results;
+import com.xy7.shortlink.framework.starter.convention.result.Result;
+import com.xy7.shortlink.framework.starter.web.Results;
 import com.xy7.shortlink.project.service.UrlTitleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

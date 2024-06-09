@@ -18,7 +18,7 @@
 package com.xy7.shortlink.project.handler;
 
 import com.alibaba.csp.sentinel.slots.block.BlockException;
-import com.xy7.shortlink.project.common.convention.result.Result;
+import com.xy7.shortlink.framework.starter.convention.result.Result;
 import com.xy7.shortlink.project.dto.req.ShortLinkCreateReqDTO;
 import com.xy7.shortlink.project.dto.resp.ShortLinkCreateRespDTO;
 

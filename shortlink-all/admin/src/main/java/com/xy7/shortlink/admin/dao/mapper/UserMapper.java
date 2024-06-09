@@ -19,6 +19,17 @@ package com.xy7.shortlink.admin.dao.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.xy7.shortlink.admin.dao.entity.UserDO;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
 public interface UserMapper extends BaseMapper<UserDO> {
+
+    /**
+     * 注销用户
+     */
+    @Update("UPDATE t_user " +
+            "SET deletion_time = #{userDO.deletionTime}, " +
+            "    del_flag = '1' " +
+            "WHERE username = #{userDO.username} AND del_flag = '0'")
+    void deletionUser(@Param("userDO") UserDO user);
 }
