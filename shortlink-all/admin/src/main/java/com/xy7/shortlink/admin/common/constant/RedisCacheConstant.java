@@ -37,6 +37,7 @@ public class RedisCacheConstant {
      */
     public static final String USER_LOGIN_KEY = "short-link:login:";
 
+
     /**
      * 用户注册可复用用户名分片，Key Prefix + Idx
      */

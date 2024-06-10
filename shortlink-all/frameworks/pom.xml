@@ -23,6 +23,7 @@
         <module>user</module>
         <module>designpattern</module>
         <module>database</module>
+        <module>distributedid</module>
     </modules>
 
 </project>

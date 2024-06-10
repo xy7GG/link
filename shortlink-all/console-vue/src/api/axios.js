@@ -16,7 +16,6 @@ const http = axios.create({
 http.interceptors.request.use(
     (config) => {
         config.headers.Token = isNotEmpty(getToken()) ? getToken() : ''
-        config.headers.Username = isNotEmpty(getUsername()) ? getUsername() : ''
         return config
     },
     (error) => {

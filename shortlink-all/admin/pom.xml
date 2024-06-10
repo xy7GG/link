@@ -83,7 +83,7 @@
 
         <dependency>
             <groupId>com.xy7.shortlink</groupId>
-            <artifactId>shortlink-base-spring-boot-start</artifactId>
+            <artifactId>shortlink-base-spring-boot-starter</artifactId>
             <version>${project.version}</version>
         </dependency>
 

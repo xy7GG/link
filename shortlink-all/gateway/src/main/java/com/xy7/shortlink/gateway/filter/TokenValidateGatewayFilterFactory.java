@@ -17,21 +17,19 @@
 
 package com.xy7.shortlink.gateway.filter;
 
-import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.JSONObject;
+import com.xy7.shortlink.framework.starter.bases.constant.UserConstant;
 import com.xy7.shortlink.gateway.config.Config;
-import com.xy7.shortlink.gateway.dto.GatewayErrorResult;
+import com.xy7.shortlink.gateway.toolkit.JWTUtil;
+import com.xy7.shortlink.gateway.toolkit.UserInfoDTO;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
-import org.springframework.core.io.buffer.DataBufferFactory;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
-import reactor.core.publisher.Mono;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -44,12 +42,16 @@ import java.util.Objects;
 @Component
 public class TokenValidateGatewayFilterFactory extends AbstractGatewayFilterFactory<Config> {
 
-    private final StringRedisTemplate stringRedisTemplate;
-
-    public TokenValidateGatewayFilterFactory(StringRedisTemplate stringRedisTemplate) {
+    public TokenValidateGatewayFilterFactory() {
         super(Config.class);
-        this.stringRedisTemplate = stringRedisTemplate;
     }
+
+    private final String[] skipAuthUrls = new String[]{"/**/v3/api-docs","/**/swagger-ui.html"};
+
+    /**
+     * 注销用户时需要传递 Token
+     */
+    public static final String DELETION_PATH = "/api/user-service/deletion";
 
     @Override
     public GatewayFilter apply(Config config) {
@@ -58,33 +60,48 @@ public class TokenValidateGatewayFilterFactory extends AbstractGatewayFilterFact
             String requestPath = request.getPath().toString();
             String requestMethod = request.getMethod().name();
             if (!isPathInWhiteList(requestPath, requestMethod, config.getWhitePathList())) {
-                String username = request.getHeaders().getFirst("username");
-                String token = request.getHeaders().getFirst("token");
-                Object userInfo;
-                if (StringUtils.hasText(username) && StringUtils.hasText(token) && (userInfo = stringRedisTemplate.opsForHash().get("short-link:login:" + username, token)) != null) {
-                    JSONObject userInfoJsonObject = JSON.parseObject(userInfo.toString());
-                    ServerHttpRequest.Builder builder = exchange.getRequest().mutate().headers(httpHeaders -> {
-                        httpHeaders.set("userId", userInfoJsonObject.getString("id"));
-                        httpHeaders.set("realName", URLEncoder.encode(userInfoJsonObject.getString("realName"), StandardCharsets.UTF_8));
-                    });
-                    return chain.filter(exchange.mutate().request(builder.build()).build());
+                String token = request.getHeaders().getFirst("Authorization");
+                // TODO 需要验证 Token 是否有效，有可能用户注销了账户，但是 Token 有效期还未过
+                UserInfoDTO userInfo = JWTUtil.parseJwtToken(token);
+                if (!validateToken(userInfo)) {
+                    ServerHttpResponse response = exchange.getResponse();
+                    response.setStatusCode(HttpStatus.UNAUTHORIZED);
+                    return response.setComplete();
                 }
-                ServerHttpResponse response = exchange.getResponse();
-                response.setStatusCode(HttpStatus.UNAUTHORIZED);
-                return response.writeWith(Mono.fromSupplier(() -> {
-                    DataBufferFactory bufferFactory = response.bufferFactory();
-                    GatewayErrorResult resultMessage = GatewayErrorResult.builder()
-                            .status(HttpStatus.UNAUTHORIZED.value())
-                            .message("Token validation error")
-                            .build();
-                    return bufferFactory.wrap(JSON.toJSONString(resultMessage).getBytes());
-                }));
+
+                ServerHttpRequest.Builder builder = exchange.getRequest().mutate().headers(httpHeaders -> {
+                    httpHeaders.set(UserConstant.USER_ID_KEY, userInfo.getUserId());
+                    httpHeaders.set(UserConstant.USER_NAME_KEY, userInfo.getUsername());
+                    httpHeaders.set(UserConstant.REAL_NAME_KEY, URLEncoder.encode(userInfo.getRealName(), StandardCharsets.UTF_8));
+                    if (Objects.equals(requestPath, DELETION_PATH)) {
+                        httpHeaders.set(UserConstant.USER_TOKEN_KEY, token);
+                    }
+                });
+
+                return chain.filter(exchange.mutate().request(builder.build()).build());
             }
             return chain.filter(exchange);
         };
     }
 
+    public boolean isSkipUrl(String url) {
+        if(StringUtils.isEmpty(url)){
+            return false;
+        }
+        AntPathMatcher matcher = new AntPathMatcher();
+        for (String skipAuthUrl : skipAuthUrls) {
+            if(matcher.match(skipAuthUrl, url)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     private boolean isPathInWhiteList(String requestPath, String requestMethod, List<String> whitePathList) {
         return (!CollectionUtils.isEmpty(whitePathList) && whitePathList.stream().anyMatch(requestPath::startsWith)) || (Objects.equals(requestPath, "/api/short-link/admin/v1/user") && Objects.equals(requestMethod, "POST"));
+    }
+
+    private boolean validateToken(UserInfoDTO userInfo) {
+        return userInfo != null;
     }
 }

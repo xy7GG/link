@@ -18,7 +18,6 @@
 package com.xy7.shortlink.admin.dao.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.xy7.shortlink.framework.starter.database.base.BaseDO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,7 +31,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class GroupUniqueDO extends BaseDO {
+public class GroupUniqueDO {
 
     /**
      * id

@@ -1,4 +1,4 @@
-package com.xy7.shortlink.framework.starter.database.core;
+package com.xy7.shortlink.framework.starter.database.snowflake;
 
 import java.util.concurrent.atomic.AtomicLong;
 

@@ -38,12 +38,6 @@ public class CacheAutoConfiguration {
 
     private final RedisDistributedProperties redisDistributedProperties;
 
-    @PostConstruct
-    public void init() {
-        System.out.println("启动成功了");
-    }
-
-
     /**
      * 创建 Redis Key 序列化器，可自定义 Key Prefix
      */

@@ -1,8 +1,6 @@
 package com.xy7.shortlink.framework.starter.database.toolkit;
 
-import com.xy7.shortlink.framework.starter.database.core.Snowflake;
-
-import java.util.concurrent.atomic.AtomicLong;
+import com.xy7.shortlink.framework.starter.database.snowflake.Snowflake;
 
 public final class SnowflakeIdUtil {
 

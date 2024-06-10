@@ -16,3 +16,4 @@
 #
 
 com.xy7.shortlink.framework.starter.database.config.MybatisPlusAutoConfiguration
+com.xy7.shortlink.framework.starter.database.config.IdAutoConfiguration

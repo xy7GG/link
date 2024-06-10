@@ -15,23 +15,30 @@
  * limitations under the License.
  */
 
-package com.xy7.shortlink.admin.common.serialize;
+package com.xy7.shortlink.framework.starter.database.snowflake;
 
-import cn.hutool.core.util.DesensitizedUtil;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
-
-import java.io.IOException;
+import com.xy7.shortlink.framework.starter.database.toolkit.SnowflakeIdUtil;
 
 /**
- * 手机号脱敏反序列化
+ * 雪花算法模板生成
  */
-public class PhoneDesensitizationSerializer extends JsonSerializer<String> {
+public abstract class AbstractWorkIdChooseTemplate {
 
-    @Override
-    public void serialize(String phone, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
-        String phoneDesensitization = DesensitizedUtil.mobilePhone(phone);
-        jsonGenerator.writeString(phoneDesensitization);
+    /**
+     * 根据自定义策略获取 WorkId 生成器
+     *
+     * @return
+     */
+    protected abstract WorkIdWrapper chooseWorkId();
+
+    /**
+     * 选择 WorkId 并初始化雪花
+     */
+    public void chooseAndInit() {
+        // 模板方法模式: 通过抽象方法获取 WorkId 包装器创建雪花算法
+        WorkIdWrapper workIdWrapper = chooseWorkId();
+        long workId = workIdWrapper.getWorkId();
+        Snowflake snowflake = new Snowflake(workId);
+        SnowflakeIdUtil.initSnowflake(snowflake);
     }
 }

@@ -26,6 +26,7 @@ import com.xy7.shortlink.admin.dto.req.UserUpdateReqDTO;
 import com.xy7.shortlink.admin.dto.resp.UserLoginRespDTO;
 import com.xy7.shortlink.admin.dto.resp.UserRespDTO;
 import jakarta.validation.constraints.NotEmpty;
+import org.springframework.web.bind.annotation.RequestParam;
 
 public interface UserService extends IService<UserDO> {
     /**
@@ -70,10 +71,9 @@ public interface UserService extends IService<UserDO> {
     /**
      * 检查用户是否登录
      *
-     * @param token    用户登录 Token
      * @return 用户是否登录标识
      */
-    UserLoginRespDTO checkLogin(String token);
+    UserLoginRespDTO checkLogin(@RequestParam("username") String username);
 
     /**
      * 用户退出登录

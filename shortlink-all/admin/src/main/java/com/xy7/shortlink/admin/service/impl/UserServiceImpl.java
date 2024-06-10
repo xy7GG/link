@@ -17,6 +17,7 @@
 
 package com.xy7.shortlink.admin.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.xy7.shortlink.admin.dto.req.UserDeletionReqDTO;
 import com.xy7.shortlink.framework.starter.common.toolkit.BeanUtil;
 import cn.hutool.core.util.StrUtil;
@@ -93,6 +94,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
     @Override
     public Boolean hasUsername(String username) {
         boolean hasUsername = userRegisterCachePenetrationBloomFilter.contains(username);
+
         if (hasUsername) {
             StringRedisTemplate instance = (StringRedisTemplate) distributedCache.getInstance();
             return instance.opsForSet().isMember(USER_REGISTER_REUSE_SHARDING + hashShardingIdx(username), username);
@@ -179,7 +181,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
     @Transactional(rollbackFor = Exception.class)
     @Override
     public UserLoginRespDTO login(UserLoginReqDTO requestParam) {
-        String usernameOrMailOrPhone = requestParam.getUsernameOrMailOrPhone();
+        String usernameOrMailOrPhone = requestParam.getUsername();
         boolean mailFlag = false;
         // 时间复杂度最佳 O(1)。indexOf or contains 时间复杂度为 O(n)
         for (char c : usernameOrMailOrPhone.toCharArray()) {
@@ -191,21 +193,24 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
         String username;
         if (mailFlag) {
             LambdaQueryWrapper<UserMailDO> queryWrapper = Wrappers.lambdaQuery(UserMailDO.class)
-                    .eq(UserMailDO::getMail, usernameOrMailOrPhone);
+                    .eq(UserMailDO::getMail, usernameOrMailOrPhone)
+                    .eq(UserMailDO::getDelFlag,0);
             username = Optional.ofNullable(userMailMapper.selectOne(queryWrapper))
                     .map(UserMailDO::getUsername)
                     .orElseThrow(() -> new ClientException("用户名/手机号/邮箱不存在"));
         } else {
             LambdaQueryWrapper<UserPhoneDO> queryWrapper = Wrappers.lambdaQuery(UserPhoneDO.class)
-                    .eq(UserPhoneDO::getPhone, usernameOrMailOrPhone);
+                    .eq(UserPhoneDO::getPhone, usernameOrMailOrPhone)
+                    .eq(UserPhoneDO::getDelFlag,0);;
             username = Optional.ofNullable(userPhoneMapper.selectOne(queryWrapper))
                     .map(UserPhoneDO::getUsername)
                     .orElse(null);
         }
-        username = Optional.ofNullable(username).orElse(requestParam.getUsernameOrMailOrPhone());
+        username = Optional.ofNullable(username).orElse(requestParam.getUsername());
         LambdaQueryWrapper<UserDO> queryWrapper = Wrappers.lambdaQuery(UserDO.class)
                 .eq(UserDO::getUsername, username)
                 .eq(UserDO::getPassword, requestParam.getPassword())
+                .eq(UserDO::getDelFlag,0)
                 .select(UserDO::getId, UserDO::getUsername, UserDO::getRealName);
         UserDO userDO = userMapper.selectOne(queryWrapper);
         if (userDO != null) {
@@ -215,22 +220,23 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
                     .realName(userDO.getRealName())
                     .build();
             String accessToken = JWTUtil.generateAccessToken(userInfo);
-            UserLoginRespDTO actual = new UserLoginRespDTO(userInfo.getUserId(), requestParam.getUsernameOrMailOrPhone(), userDO.getRealName(), accessToken);
-            distributedCache.put(USER_LOGIN_KEY + accessToken, JSON.toJSONString(actual), 30, TimeUnit.MINUTES);
+            UserLoginRespDTO actual = new UserLoginRespDTO(userInfo.getUserId(), requestParam.getUsername(), userDO.getRealName(), accessToken);
+            distributedCache.put(USER_LOGIN_KEY + userDO.getUsername(),JSON.toJSONString(actual), 30, TimeUnit.MINUTES);
             return actual;
         }
         throw new ServiceException("账号不存在或密码错误");
     }
 
     @Override
-    public UserLoginRespDTO checkLogin(String token) {
-        return distributedCache.get(token, UserLoginRespDTO.class);
+    public UserLoginRespDTO checkLogin(String username) {
+        return distributedCache.get(USER_LOGIN_KEY + username, UserLoginRespDTO.class);
     }
 
     @Override
-    public void logout(String token) {
-        if (StrUtil.isNotBlank(token)) {
-            distributedCache.delete(token);
+    public void logout(String username) {
+        if (!ObjectUtil.isEmpty(checkLogin(username))) {
+            distributedCache.delete(USER_LOGIN_KEY + username);
+            return;
         }
         throw new ClientException("用户Token不存在或用户未登录");
     }
@@ -268,7 +274,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
                         .build();
                 userMailMapper.deletionUser(userMailDO);
             }
-            distributedCache.delete(UserContext.getToken());
+            distributedCache.delete(USER_LOGIN_KEY + UserContext.getUsername());
             userReuseMapper.insert(new UserReuseDO(username));
             StringRedisTemplate instance = (StringRedisTemplate) distributedCache.getInstance();
             instance.opsForSet().add(USER_REGISTER_REUSE_SHARDING + hashShardingIdx(username), username);

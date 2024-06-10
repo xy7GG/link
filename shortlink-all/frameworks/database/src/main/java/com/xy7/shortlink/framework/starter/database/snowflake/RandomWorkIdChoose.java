@@ -15,41 +15,30 @@
  * limitations under the License.
  */
 
-package com.xy7.shortlink.admin.dto.resp;
+package com.xy7.shortlink.framework.starter.database.snowflake;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.xy7.shortlink.admin.serialize.PhoneDesensitizationSerializer;
-import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.InitializingBean;
 
 /**
- * 用户返回参数响应
+ * 使用随机数获取雪花 WorkId
  */
-@Data
-public class UserRespDTO {
+@Slf4j
+public class RandomWorkIdChoose extends AbstractWorkIdChooseTemplate implements InitializingBean {
 
-    /**
-     * id
-     */
-    private Long id;
+    @Override
+    protected WorkIdWrapper chooseWorkId() {
+        int start = 0, end = 31;
+        return new WorkIdWrapper(getRandom(start, end));
+    }
 
-    /**
-     * 用户名
-     */
-    private String username;
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        chooseAndInit();
+    }
 
-    /**
-     * 真实姓名
-     */
-    private String realName;
-
-    /**
-     * 手机号
-     */
-    @JsonSerialize(using = PhoneDesensitizationSerializer.class)
-    private String phone;
-
-    /**
-     * 邮箱
-     */
-    private String mail;
+    private static long getRandom(int start, int end) {
+        long random = (long) (Math.random() * (end - start + 1) + start);
+        return random;
+    }
 }
