@@ -43,7 +43,7 @@ public enum UserErrorCodeEnum implements IErrorCode {
 
     HAS_USERNAME_NOTNULL("A006006", "用户名已存在"),
 
-    PHONE_REGISTERED("A00@6007", "手机号已被占用"),
+    PHONE_REGISTERED("A006007", "手机号已被占用"),
 
     MAIL_REGISTERED("A006008", "邮箱已被占用"),
 
