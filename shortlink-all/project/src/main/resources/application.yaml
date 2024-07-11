@@ -9,9 +9,9 @@ spring:
     url: jdbc:shardingsphere:classpath:shardingsphere-config-${database.env:prod}.yaml
   data:
     redis:
-      host: 120.46.212.99
+      host: 1.92.99.22
       port: 6379
-      password: 123456
+      password: JN58fote
   mvc:
     view:
       prefix: /templates/
