@@ -19,9 +19,11 @@ package com.xy7.shortlink.project.controller;
 
 import com.xy7.shortlink.framework.starter.convention.result.Result;
 import com.xy7.shortlink.framework.starter.web.Results;
+import com.xy7.shortlink.project.net.SocketInstance;
 import com.xy7.shortlink.project.service.UrlTitleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,6 +35,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UrlTitleController {
 
     private final UrlTitleService urlTitleService;
+    private final SocketInstance socketInstance;
 
     /**
      * 根据 URL 获取对应网站的标题
@@ -40,5 +43,11 @@ public class UrlTitleController {
     @GetMapping("/api/short-link/v1/title")
     public Result<String> getTitleByUrl(@RequestParam("url") String url) {
         return Results.success(urlTitleService.getTitleByUrl(url));
+    }
+
+    @PostMapping(value = "/api/short-link/v1/pushMessageToUser")
+    public Result<Void> pushMessageToUser(@RequestParam String msgContent) {
+        socketInstance.pushMessage("1231",msgContent);
+        return Results.success();
     }
 }

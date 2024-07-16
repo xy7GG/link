@@ -45,11 +45,10 @@
             <artifactId>shardingsphere-jdbc-core</artifactId>
             <optional>true</optional>
         </dependency>
-
         <dependency>
             <groupId>com.xy7.shortlink</groupId>
-            <artifactId>shortlink-base-spring-boot-start</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <artifactId>shortlink-base-spring-boot-starter</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 </project>
