@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.xy7.shortlink.framework.starter.designpattern.config.DesignPatternAutoConfiguration
